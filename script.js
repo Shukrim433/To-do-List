@@ -13,12 +13,27 @@ function addTask() {
     li.appendChild(span);
   }
   inputBox.value = ""; // clear input after adding task
+  saveToLocalStorage();
 }
 
 listContainer.addEventListener("click", function (e) {
-  if (e.target.tagName === "LI") { // if u click a li tag (task), toggles the class "checked"
+  if (e.target.tagName === "LI") {
+    // if u click a li tag (task), toggles the class "checked"
     e.target.classList.toggle("checked");
-  } else if (e.target.tagName === "SPAN") { // if u click a span tag ("x"), removes the parent element (task) it is in
+    saveToLocalStorage();
+  } else if (e.target.tagName === "SPAN") {
+    // if u click a span tag ("x"), removes the parent element (task) it is in
     e.target.parentElement.remove();
+    saveToLocalStorage();
   }
 });
+
+function saveToLocalStorage() {
+  localStorage.setItem("tasks", listContainer.innerHTML);
+}
+
+function getFromLocalStorage() {
+  listContainer.innerHTML = localStorage.getItem("tasks");
+}
+
+getFromLocalStorage();
